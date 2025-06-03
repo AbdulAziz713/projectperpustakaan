@@ -20,6 +20,21 @@ class DashboardController extends Controller
         })->reverse()->toArray();
         $visitsPerMonth = collect($months)->map(fn($month) => Visit::whereMonth('visit_date', date('m', strtotime($month)))->count())->toArray();
 
-        return view('admin_desa.dashboard', compact('totalMembers', 'todayVisits', 'totalBooks', 'months', 'visitsPerMonth'));
+        $booksTanggulun = Book::where('location', 'tanggulun_barat')->count();
+        $totalStockTanggulun = Book::where('location', 'tanggulun_barat')->sum('stock');
+        $booksThisMonth = Book::whereMonth('created_at', now()->month)
+            ->whereYear('created_at', now()->year)
+            ->count();
+
+        return view('admin_desa.dashboard', compact(
+            'totalMembers',
+            'todayVisits',
+            'totalBooks',
+            'months',
+            'visitsPerMonth',
+            'booksTanggulun',
+            'totalStockTanggulun',
+            'booksThisMonth'
+        ));
     }
 }
