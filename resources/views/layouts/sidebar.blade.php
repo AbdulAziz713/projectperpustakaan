@@ -78,11 +78,11 @@
                 <i class="fas fa-user-cog mr-2"></i><span>Kelola Koleksi Buku</span>
             </a>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('pustakawan.borrowings.index') }}">
                 <i class="fas fa-user-cog mr-2"></i><span>Kelola Peminjaman</span>
             </a>
-            </li> -->
+            </li>
 
             @elseif (auth()->user()->role ==='admin')
             <li class="nav-item active">

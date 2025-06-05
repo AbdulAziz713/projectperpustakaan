@@ -1,54 +1,53 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('content')
-<h1 class="text-2xl font-bold mb-6">Form Peminjaman</h1>
+@section('content_admin')
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">📝 Form Peminjaman Buku</h1>
 
-<form action="{{ route('pustakawan.borrowings.store') }}" method="POST" class="bg-white p-6 rounded-xl shadow-md">
-    @csrf
-    <div class="mb-4">
-        <label class="block">Pilih Anggota</label>
-        <select name="member_id" class="input">
-            @foreach($members as $member)
-            <option value="{{ $member->id }}">{{ $member->name }}</option>
-            @endforeach
-        </select>
+    <div class="card shadow">
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">Tambah Data Peminjaman</h6>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('pustakawan.borrowings.store') }}" method="POST">
+                @csrf
+                <div class="mb-3">
+                    <label for="member_id" class="form-label">Pilih Anggota</label>
+                    <select name="member_id" id="member_id" class="form-select" required>
+                        <option disabled selected>-- Pilih Anggota --</option>
+                        @foreach($members as $member)
+                            <option value="{{ $member->member_id }}">{{ $member->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="book_id" class="form-label">Pilih Buku</label>
+                    <select name="book_id" id="book_id" class="form-select" required>
+                        <option disabled selected>-- Pilih Buku --</option>
+                        @foreach($books as $book)
+                            <option value="{{ $book->id }}">{{ $book->title }} (Stok: {{ $book->stock }})</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('pustakawan.borrowings.index') }}" class="btn btn-secondary me-2">
+                        <i class="fas fa-arrow-left"></i> Batal
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-book"></i> Pinjam Buku
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="mb-4">
-        <label class="block">Pilih Buku</label>
-        <select name="book_id" class="input">
-            @foreach($books as $book)
-            <option value="{{ $book->id }}">{{ $book->title }} (Stok: {{ $book->stock }})</option>
-            @endforeach
-        </select>
-    </div>
-
-    <button type="submit" class="btn-primary">Pinjam</button>
-</form>
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const deleteForms = document.querySelectorAll('.delete-form');
-    deleteForms.forEach(function(form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Yakin?',
-                text: "Tindakan ini tidak bisa dibatalkan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, lanjut!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        });
-    });
-});
-</script>
-@endpush
+    @if(session('error'))
+        <div class="alert alert-danger mt-3">{{ session('error') }}</div>
+    @endif
+    @if(session('success'))
+        <div class="alert alert-success mt-3">{{ session('success') }}</div>
+    @endif
+</div>
 @endsection

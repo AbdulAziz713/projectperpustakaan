@@ -11,12 +11,17 @@ class Borrowing extends Model
     ];
 
     public function member()
-    {
-        return $this->belongsTo(Member::class);
-    }
+{
+    return $this->belongsTo(Member::class, 'member_id', 'member_id');
+}
 
     public function book()
     {
         return $this->belongsTo(Book::class);
     }
+
+    protected $casts = [
+        'borrowed_at' => 'datetime',
+        'returned_at' => 'datetime',
+    ];    
 }

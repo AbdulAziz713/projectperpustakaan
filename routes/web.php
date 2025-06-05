@@ -43,11 +43,15 @@ Route::middleware(['auth'])->prefix('admin-daerah')->name('admin_daerah.')->grou
     }); 
     // Manajemen Pustakawan (Anggota)
     Route::resource('pustakawans', \App\Http\Controllers\AdminDaerah\PustakawanController::class)
-        ->only(['index', 'destroy'])
-        ->names([
-            'index' => 'pustakawans.index',
-            'destroy' => 'pustakawans.destroy',
-        ]);
+    ->except(['show'])
+    ->names([
+        'index' => 'pustakawans.index',
+        'create' => 'pustakawans.create',
+        'store' => 'pustakawans.store',
+        'edit' => 'pustakawans.edit',
+        'update' => 'pustakawans.update',
+        'destroy' => 'pustakawans.destroy',
+    ]);
 
     // Route Verifikasi Pustakawan (PATCH digunakan untuk update sebagian data)
     Route::patch('pustakawans/{pustakawan}/verify', [\App\Http\Controllers\AdminDaerah\PustakawanController::class, 'verify'])
@@ -57,8 +61,6 @@ Route::middleware(['auth'])->prefix('admin-daerah')->name('admin_daerah.')->grou
 Route::get('reports', [\App\Http\Controllers\AdminDaerah\ReportController::class, 'index'])->name('reports.index');
 Route::get('reports/export-excel', [\App\Http\Controllers\AdminDaerah\ReportController::class, 'exportExcel'])->name('reports.export.excel');
 Route::get('reports/export-pdf', [\App\Http\Controllers\AdminDaerah\ReportController::class, 'exportPDF'])->name('reports.export.pdf');
-Route::resource('borrowings', \App\Http\Controllers\Pustakawan\BorrowingController::class);
-Route::put('borrowings/{borrowing}/return', [\App\Http\Controllers\Pustakawan\BorrowingController::class, 'returnBook'])->name('borrowings.return');
 Route::get('/struktur-organisasi', [WebController::class, 'strukturOrganisasi'])->name('struktur-organisasi');
 Route::get('/sejarah', [WebController::class, 'sejarah'])->name('sejarah');
 Route::get('/unit-kerja', [WebController::class, 'unitKerja'])->name('unit-kerja');

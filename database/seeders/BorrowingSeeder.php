@@ -6,29 +6,31 @@ use Illuminate\Database\Seeder;
 use App\Models\Borrowing;
 use App\Models\User;
 use App\Models\Book;
+use Illuminate\Support\Str;
 
 class BorrowingSeeder extends Seeder
 {
     public function run(): void
     {
-        $userIds = User::where('role', 'anggota')->pluck('id');
-        $bookIds = Book::pluck('id');
+        $users = \App\Models\User::pluck('id')->toArray();
+        $books = \App\Models\Book::pluck('id')->toArray();
 
-        if ($userIds->isEmpty() || $bookIds->isEmpty()) {
-            $this->command->warn("No users or books found. Seeder skipped.");
-            return;
-        }
+        // Buat 20 data peminjaman
+        for ($i = 0; $i < 20; $i++) {
+            $status = fake()->randomElement(['dipinjam', 'dikembalikan']);
 
-        foreach (range(1, 20) as $i) {
+            $borrowedAt = fake()->dateTimeBetween('-2 months', 'now');
+            $returnedAt = $status === 'dikembalikan'
+                ? fake()->dateTimeBetween($borrowedAt, 'now')
+                : null;
+
             Borrowing::create([
-                'user_id' => $userIds->random(),
-                'book_id' => $bookIds->random(),
-                'borrowed_at' => now()->subDays(rand(1, 30)),
-                'returned_at' => rand(0, 1) ? now()->subDays(rand(1, 10)) : null,
-                'status' => rand(0, 1) ? 'dikembalikan' : 'dipinjam',
+                'member_id'   => rand(1, 4),
+                'book_id'     => rand(24, 200),
+                'borrowed_at' => $borrowedAt,
+                'returned_at' => $returnedAt,
+                'status'      => $status,
             ]);
         }
-
-        $this->command->info("BorrowingSeeder selesai (20 data).");
     }
 }

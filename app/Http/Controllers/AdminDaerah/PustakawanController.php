@@ -26,4 +26,51 @@ class PustakawanController extends Controller
         return back()->with('success', 'Anggota berhasil dihapus.');
     }
 
+    public function create()
+{
+    return view('admin_daerah.pustakawans.create');
+}
+
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:6|confirmed',
+    ]);
+
+    User::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'password' => bcrypt($validated['password']),
+        'role' => 'anggota', // PENTING! Supaya masuk filter di index()
+    ]);
+
+    return redirect()->route('admin_daerah.pustakawans.index')
+        ->with('success', 'Pustakawan berhasil ditambahkan.');
+}
+
+public function edit(User $pustakawan)
+{
+    return view('admin_daerah.pustakawans.edit', compact('pustakawan'));
+}
+
+public function update(Request $request, User $pustakawan)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $pustakawan->id,
+        'password' => 'nullable|string|min:6|confirmed',
+    ]);
+
+    $data = $request->only('name', 'email');
+    if ($request->password) {
+        $data['password'] = bcrypt($request->password);
+    }
+
+    $pustakawan->update($data);
+
+    return redirect()->route('admin_daerah.pustakawans.index')->with('success', 'Pustakawan berhasil diperbarui.');
+}
+
 }

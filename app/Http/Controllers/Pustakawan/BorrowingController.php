@@ -34,7 +34,7 @@ class BorrowingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'member_id' => 'required|exists:members,id',
+            'member_id' => 'required|exists:members,member_id',
             'book_id' => 'required|exists:books,id',
         ]);
 
@@ -45,7 +45,7 @@ class BorrowingController extends Controller
             
             // Check if member has active borrowings
             $activeBorrowings = Borrowing::where('member_id', $request->member_id)
-                ->where('status', 'borrowed')
+                ->where('status', 'dipinjam')
                 ->count();
                 
             if ($activeBorrowings >= 3) {
@@ -64,7 +64,7 @@ class BorrowingController extends Controller
                 'member_id' => $request->member_id,
                 'book_id' => $request->book_id,
                 'borrowed_at' => now(),
-                'status' => 'borrowed',
+                'status' => 'dipinjam',
             ]);
 
             DB::commit();
@@ -84,13 +84,13 @@ class BorrowingController extends Controller
         try {
             DB::beginTransaction();
 
-            if ($borrowing->status === 'returned') {
+            if ($borrowing->status === 'dikembalikan') {
                 return back()->with('error', 'Buku sudah dikembalikan sebelumnya.');
             }
 
             $borrowing->update([
                 'returned_at' => now(),
-                'status' => 'returned'
+                'status' => 'dikembalikan'
             ]);
 
             // Return book stock

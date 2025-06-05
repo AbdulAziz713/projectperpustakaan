@@ -3,6 +3,10 @@
 @section('content_admin')
 <div class="container py-4">
     <h1 class="h4 fw-bold text-primary mb-4">Kelola Pustakawan</h1>
+    <div class="mb-3 text-end">
+        <a href="{{ route('admin_daerah.pustakawans.create') }}" class="btn btn-sm btn-success">+ Tambah Pustakawan</a>
+    </div>
+
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
@@ -43,6 +47,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                     </form>
+                                    <a href="{{ route('admin_daerah.pustakawans.edit', $pustakawan->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                 </div>
                             </td>
                         </tr>

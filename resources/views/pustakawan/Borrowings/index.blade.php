@@ -1,60 +1,69 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
-@section('content')
-<h1 class="text-2xl font-bold mb-6">Peminjaman Buku</h1>
+@section('content_admin')
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">📚 Daftar Peminjaman Buku</h1>
 
-<a href="{{ route('pustakawan.borrowings.create') }}" class="btn-primary mb-4">Pinjam Buku</a>
+    <a href="{{ route('pustakawan.borrowings.create') }}" class="btn btn-success mb-3">
+        <i class="fas fa-plus-circle"></i> Tambah Peminjaman
+    </a>
 
-<table class="min-w-full bg-white">
-    <thead>
-        <tr>
-            <th class="px-4 py-2">Nama Anggota</th>
-            <th class="px-4 py-2">Judul Buku</th>
-            <th class="px-4 py-2">Tanggal Pinjam</th>
-            <th class="px-4 py-2">Tanggal Kembali</th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach($reports as $report)
-    <tr>
-        <td class="px-4 py-2">{{ $report->users?->name ?? 'N/A' }}</td>
-        <td class="px-4 py-2">{{ $report->books?->title ?? 'N/A' }}</td>
-        <td class="px-4 py-2">{{ $report->borrowed_at->format('d M Y') }}</td>
-        <td class="px-4 py-2">
-    {{ $report->borrowed_at ? $report->borrowed_at->format('d M Y') : 'N/A' }}
-</td>
-<td class="px-4 py-2">
-    {{ $report->returned_at ? $report->returned_at->format('d M Y') : '-' }}
-</td>
-
-    </tr>
-    @endforeach
-    </tbody>
-</table>
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const deleteForms = document.querySelectorAll('.delete-form');
-    deleteForms.forEach(function(form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Yakin?',
-                text: "Tindakan ini tidak bisa dibatalkan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, lanjut!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        });
-    });
-});
-</script>
-@endpush
+    <div class="card shadow">
+        <div class="card-header py-3 bg-primary text-white">
+            <h6 class="m-0 font-weight-bold">Riwayat Peminjaman</h6>
+        </div>
+        <div class="card-body">
+            @if(count($borrowings) > 0)
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nama Anggota</th>
+                                <th>Judul Buku</th>
+                                <th>Tanggal Pinjam</th>
+                                <th>Tanggal Kembali</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($borrowings as $borrowing)
+                            <tr>
+                                <td>{{ $borrowing->member?->name ?? 'N/A' }}</td>
+                                <td>{{ $borrowing->book?->title ?? 'N/A' }}</td>
+                                <td>{{ $borrowing->borrowed_at ? \Carbon\Carbon::parse($borrowing->borrowed_at)->format('d M Y') : 'N/A' }}</td>
+                                <td>{{ $borrowing->returned_at ? \Carbon\Carbon::parse($borrowing->returned_at)->format('d M Y') : '-' }}</td>
+                                <td>
+                                    @if($borrowing->status === 'dipinjam')
+                                        <span class="badge bg-warning text-dark">Dipinjam</span>
+                                    @else
+                                        <span class="badge bg-success">Dikembalikan</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($borrowing->status === 'dipinjam')
+                                    <form action="{{ route('pustakawan.borrowings.return', $borrowing->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Yakin ingin mengembalikan buku ini?')">
+                                            <i class="fas fa-undo"></i> Kembalikan
+                                        </button>
+                                    </form>
+                                    @else
+                                        <i class="fas fa-check-circle text-success"></i>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle"></i> Belum ada data peminjaman.
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
 @endsection
