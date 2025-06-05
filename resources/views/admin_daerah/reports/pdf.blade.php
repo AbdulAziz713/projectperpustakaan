@@ -19,6 +19,27 @@
         @endforeach
         </tbody>
     </table>
+@elseif(in_array($tipe, ['buku_desa', 'buku_pustakawan']))
+<table>
+    <thead>
+        <tr>
+            <th>Judul</th>
+            <th>Penulis</th>
+            <th>Penerbit</th>
+            <th>Tahun</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($reports as $book)
+        <tr>
+            <td>{{ $book->title }}</td>
+            <td>{{ $book->author }}</td>
+            <td>{{ $book->publisher }}</td>
+            <td>{{ $book->year }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 @elseif($tipe === 'kunjungan')
     <table width="100%" border="1" cellspacing="0" cellpadding="4">
         <thead>

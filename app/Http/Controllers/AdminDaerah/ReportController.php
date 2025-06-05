@@ -26,17 +26,29 @@ class ReportController extends Controller
                 ->latest()
                 ->paginate(10)
                 ->withQueryString();
+        } elseif ($tipe === 'pustakawan') {
+            $reports = User::where('role', 'petugas')
+                ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
+                ->latest()
+                ->paginate(10)
+                ->withQueryString();
         } elseif ($tipe === 'kunjungan') {
             $reports = Visit::when($bulan, fn($query) => $query->whereMonth('date', $bulan))
                 ->latest()
                 ->paginate(10)
                 ->withQueryString();
-        } elseif ($tipe === 'buku') {
-            $books = \App\Models\Book::select('id', 'title', 'author', 'publisher', 'year', 'photo')
+        } elseif ($tipe === 'buku_desa') {
+            $books = \App\Models\Book::where('location', 'tanggulun_barat') // sesuaikan dengan field asli
                 ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
                 ->latest()
                 ->paginate(10)
                 ->withQueryString();
+        } elseif ($tipe === 'buku_pustakawan') {
+            $books = \App\Models\Book::where('location', 'perpusda') // sesuaikan juga
+                ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
+                ->latest()
+                ->paginate(10)
+                ->withQueryString();        
         } else {
             // Default: laporan pustakawan (peminjaman buku)
             $reports = Report::with(['user', 'book'])
@@ -54,6 +66,32 @@ class ReportController extends Controller
         $bulan = $request->get('bulan');
         $tipe = $request->get('tipe', 'pustakawan');
 
+        if ($tipe === 'anggota') {
+            $reports = User::where('role', 'anggota')
+                ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
+                ->get();
+        } elseif ($tipe === 'kunjungan') {
+            $reports = Visit::when($bulan, fn($query) => $query->whereMonth('date', $bulan))
+                ->get();
+        } elseif ($tipe === 'buku_desa') {
+                    $reports = \App\Models\Book::where('location', 'tanggulun_barat')
+                        ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
+                        ->get();
+                } elseif ($tipe === 'buku_pustakawan') {
+                    $reports = \App\Models\Book::where('location', 'perpusda')
+                        ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
+                        ->get();                
+        } elseif ($tipe === 'pustakawan') {
+            $reports = User::where('role', 'petugas')
+                ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
+                ->get();
+        } else {
+            $reports = Report::with(['user', 'book'])
+                ->when($bulan, fn($query) => $query->whereMonth('borrowed_at', $bulan))
+                ->get();
+        }
+
+        $excel = PDF::loadView('admin_daerah.reports.excel', compact('reports', 'tipe'));
         return Excel::download(new ReportsExport($bulan, $tipe), 'laporan.xlsx');
     }
 
@@ -68,6 +106,18 @@ class ReportController extends Controller
                 ->get();
         } elseif ($tipe === 'kunjungan') {
             $reports = Visit::when($bulan, fn($query) => $query->whereMonth('date', $bulan))
+                ->get();
+        } elseif ($tipe === 'buku_desa') {
+                    $reports = \App\Models\Book::where('location', 'tanggulun_barat')
+                        ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
+                        ->get();
+                } elseif ($tipe === 'buku_pustakawan') {
+                    $reports = \App\Models\Book::where('location', 'perpusda')
+                        ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
+                        ->get();                
+        } elseif ($tipe === 'pustakawan') {
+            $reports = User::where('role', 'petugas')
+                ->when($bulan, fn($query) => $query->whereMonth('created_at', $bulan))
                 ->get();
         } else {
             $reports = Report::with(['user', 'book'])

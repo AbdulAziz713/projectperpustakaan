@@ -4,7 +4,7 @@
 <h1 class="fs-3 fw-bold mb-4">Edit Anggota</h1>
 
 <div class="bg-white p-4 rounded shadow-sm">
-    <form action="{{ route('admin_desa.members.update', $member->id) }}" method="POST">
+    <form action="{{ route('admin_desa.members.update', $member->member_id) }}" method="POST">
         @csrf
         @method('PUT')
 

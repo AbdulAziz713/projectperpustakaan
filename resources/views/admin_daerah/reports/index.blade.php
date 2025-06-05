@@ -23,7 +23,8 @@
                 <option value="pustakawan" {{ request('tipe') == 'pustakawan' ? 'selected' : '' }}>Pustakawan</option>
                 <option value="anggota" {{ request('tipe') == 'anggota' ? 'selected' : '' }}>Anggota</option>
                 <option value="kunjungan" {{ request('tipe') == 'kunjungan' ? 'selected' : '' }}>Kunjungan</option>
-                <!-- <option value="buku" {{ request('tipe') == 'buku' ? 'selected' : '' }}>Buku</option> -->
+                <option value="buku_desa" {{ request('tipe') == 'buku_desa' ? 'selected' : '' }}>Buku Desa</option>
+                <option value="buku_pustakawan" {{ request('tipe') == 'buku_pustakawan' ? 'selected' : '' }}>Buku Pustakawan</option>
             </select>
         </div>
 
@@ -40,7 +41,7 @@
     <div class="card shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
-                @if(request('tipe') == 'anggota')
+                @if(request('tipe') == ['anggota', 'pustakawan'])
                     <table class="table table-hover table-striped">
                         <thead class="table-primary">
                             <tr>
@@ -50,7 +51,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($reports as $anggota)
+                            @foreach($reports as $user)
                             <tr>
                                 <td>{{ $anggota->name }}</td>
                                 <td>{{ $anggota->email }}</td>
@@ -80,7 +81,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    @elseif(request('tipe') == 'buku')
+                    @elseif(in_array(request('tipe'), ['buku_desa', 'buku_pustakawan']))
     <table class="table table-hover table-striped align-middle">
         <thead class="table-primary">
             <tr>

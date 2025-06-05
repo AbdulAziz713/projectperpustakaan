@@ -9,6 +9,8 @@ class Member extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'member_id'; // <- Tambahkan ini
+
     protected $fillable = [
         'name',
         'email',
@@ -16,9 +18,13 @@ class Member extends Model
         'address',
         'status'
     ];
+    
+    // Tambahan opsional jika member_id bukan auto increment atau bukan integer
+    public $incrementing = true; // false jika bukan auto increment
+    protected $keyType = 'int';  // 'string' jika tipe-nya string (misalnya UUID)
 
     public function borrowings()
     {
         return $this->hasMany(Borrowing::class);
     }
-} 
+}

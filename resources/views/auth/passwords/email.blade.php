@@ -1,47 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="auth-page container auth-container">
-    <div class="row justify-content-center w-100">
-        <div class="col-md-6">
-            <div class="card auth-card">
-                <div class="card-header">{{ __('Atur Ulang Kata Sandi') }}</div>
+<section class="section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-header bg-primary text-white text-center rounded-top">
+                        <h5 class="mb-0">{{ __('Lupa Kata Sandi') }}</h5>
+                    </div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    <div class="card-body bg-white">
+                        @if (session('status'))
+                            <div class="alert alert-success text-center" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
+                        <p class="text-muted text-center mb-4">
+                            Masukkan alamat email Anda, kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda.
+                        </p>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Alamat Email') }}</label>
+                        <form method="POST" action="{{ route('password.email') }}">
+                            @csrf
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">{{ __('Alamat Email') }}</label>
+                                <input id="email" type="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    name="email" value="{{ old('email') }}" required autofocus>
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                        </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Kirim Tautan') }}
+                                    <i class="fas fa-paper-plane me-1"></i> {{ __('Kirim Tautan Reset') }}
                                 </button>
                             </div>
+                        </form>
+
+                        <div class="text-center mt-3">
+                            <a href="{{ route('login') }}" class="text-decoration-none">
+                                <i class="fas fa-arrow-left me-1"></i> Kembali ke Login
+                            </a>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 @endsection
