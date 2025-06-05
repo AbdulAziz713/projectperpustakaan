@@ -49,8 +49,6 @@ class DashboardController extends Controller
             ->count();
         $booksPerpusda = Book::where('location', 'perpusda')->count();
         $totalStockPerpusda = Book::where('location', 'perpusda')->sum('stock');
-        $booksTanggulun = Book::where('location', 'tanggulun_barat')->count();
-        $totalStockTanggulun = Book::where('location', 'tanggulun_barat')->sum('stock');
         $booksCipeundeuy = Book::where('location', 'cipeundeuy')->count();
         $totalStockCipeundeuy = Book::where('location', 'cipeundeuy')->sum('stock');
         $booksCisalak = Book::where('location', 'cisalak')->count();
@@ -68,8 +66,6 @@ class DashboardController extends Controller
             'booksThisMonth',
             'booksPerpusda',
             'totalStockPerpusda',
-            'booksTanggulun',
-            'totalStockTanggulun',
             'booksCipeundeuy',
             'totalStockCipeundeuy',
             'booksCisalak',
