@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pustakawan\BorrowingController;
 use App\Http\Controllers\WebController;
+use App\Http\Controllers\AdminDesa\KeterlibatanMasyarakatController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,7 @@ Route::middleware(['auth'])->prefix('admin-desa')->name('admin_desa.')->group(fu
     Route::resource('visits', \App\Http\Controllers\AdminDesa\VisitController::class);
     Route::resource('members', \App\Http\Controllers\AdminDesa\MemberController::class);
     Route::resource('books', \App\Http\Controllers\AdminDesa\BookController::class);  
+    Route::resource('keterlibatan', KeterlibatanMasyarakatController::class)->except(['show', 'edit', 'update']);
 });
 
 Route::middleware(['auth'])->prefix('pustakawan')->name('pustakawan.')->group(function () {

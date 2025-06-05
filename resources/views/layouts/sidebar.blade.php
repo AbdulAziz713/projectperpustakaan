@@ -54,6 +54,12 @@
             </a>
             </li>
 
+            <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('admin_desa.keterlibatan.index') }}">
+                <i class="fas fa-user-cog mr-2"></i><span>Ketelibatan Masyarakat</span>
+            </a>
+            </li>
+
             @elseif (auth()->user()->role ==='anggota')
             <li class="nav-item active">
             <a class="nav-link" href="{{ route('pustakawan.dashboard') }}">
