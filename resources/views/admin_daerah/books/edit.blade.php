@@ -14,37 +14,11 @@
         </div>
     @endif
 
-    <form action="{{ route('pustakawan.books.update', $book) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin_daerah.books.update', $book) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('pustakawan.books.form', ['book' => $book])
         <button type="submit" class="btn btn-success">Update</button>
     </form>
 </div>
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const deleteForms = document.querySelectorAll('.delete-form');
-    deleteForms.forEach(function(form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Yakin?',
-                text: "Tindakan ini tidak bisa dibatalkan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, lanjut!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        });
-    });
-});
-</script>
-@endpush
 @endsection

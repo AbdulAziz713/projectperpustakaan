@@ -130,7 +130,32 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('template/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('template/js/demo/chart-pie-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @stack('scripts')
+    @if(session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Sukses',
+        text: "{{ addslashes(session('success')) }}",
+        timer: 2500,
+        showConfirmButton: false
+    });
+</script>
+@endif
+
+@if(session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal',
+        text: "{{ addslashes(session('error')) }}",
+        timer: 3000,
+        showConfirmButton: false
+    });
+</script>
+@endif
 </body>
 
 </html>

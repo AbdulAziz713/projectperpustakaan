@@ -5,33 +5,50 @@
     <h1 class="h4 fw-bold text-primary mb-4">Kelola Laporan</h1>
 
     <form method="GET" class="row g-3 mb-4 align-items-end">
-        <div class="col-md-3">
-            <label for="bulan" class="form-label">Bulan</label>
-            <select name="bulan" id="bulan" class="form-select">
-                <option value="">Semua Bulan</option>
-                @for($i=1; $i<=12; $i++)
-                    <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>
-                        {{ DateTime::createFromFormat('!m', $i)->format('F') }}
-                    </option>
-                @endfor
-            </select>
-        </div>
+    <div class="col-md-2">
+    <label for="tanggal" class="form-label">Tanggal</label>
+    <select name="tanggal" id="tanggal" class="form-select">
+        <option value="">Semua Tanggal</option>
+        @for ($d = 1; $d <= 31; $d++)
+            <option value="{{ $d }}" {{ request('tanggal') == $d ? 'selected' : '' }}>{{ $d }}</option>
+        @endfor
+    </select>
+    </div>
 
-        <div class="col-md-3">
-            <label for="tipe" class="form-label">Tipe Data</label>
-            <select name="tipe" id="tipe" class="form-select">
-                <option value="pustakawan" {{ request('tipe') == 'pustakawan' ? 'selected' : '' }}>Pustakawan</option>
-                <option value="anggota" {{ request('tipe') == 'anggota' ? 'selected' : '' }}>Anggota</option>
-                <option value="kunjungan" {{ request('tipe') == 'kunjungan' ? 'selected' : '' }}>Kunjungan</option>
-                <option value="buku_desa" {{ request('tipe') == 'buku_desa' ? 'selected' : '' }}>Buku Desa</option>
-                <option value="buku_pustakawan" {{ request('tipe') == 'buku_pustakawan' ? 'selected' : '' }}>Buku Pustakawan</option>
-            </select>
-        </div>
+    <div class="col-md-2">
+        <label for="bulan" class="form-label">Bulan</label>
+        <select name="bulan" id="bulan" class="form-select">
+            <option value="">Semua Bulan</option>
+            @for($i=1; $i<=12; $i++)
+                <option value="{{ $i }}" {{ request('bulan') == $i ? 'selected' : '' }}>
+                    {{ DateTime::createFromFormat('!m', $i)->format('F') }}
+                </option>
+            @endfor
+        </select>
+    </div>
 
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary">Terapkan</button>
-        </div>
-    </form>
+    <div class="col-md-2">
+        <label for="tahun" class="form-label">Tahun</label>
+        <input type="number" name="tahun" id="tahun" class="form-control"
+               value="{{ request('tahun', now()->year) }}" min="2000" max="{{ now()->year }}">
+    </div>
+
+    <div class="col-md-2">
+        <label for="tipe" class="form-label">Tipe Data</label>
+        <select name="tipe" id="tipe" class="form-select">
+            <option value="pustakawan" {{ request('tipe') == 'pustakawan' ? 'selected' : '' }}>Pustakawan</option>
+            <option value="anggota" {{ request('tipe') == 'anggota' ? 'selected' : '' }}>Anggota</option>
+            <option value="kunjungan" {{ request('tipe') == 'kunjungan' ? 'selected' : '' }}>Kunjungan</option>
+            <option value="buku_desa" {{ request('tipe') == 'buku_desa' ? 'selected' : '' }}>Buku Desa</option>
+            <option value="buku_pustakawan" {{ request('tipe') == 'buku_pustakawan' ? 'selected' : '' }}>Buku Pustakawan</option>
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">Terapkan</button>
+    </div>
+</form>
+
 
     <div class="d-flex gap-3 mb-4">
         <a href="{{ route('admin_daerah.reports.export.excel', request()->only('bulan', 'tipe')) }}" class="btn btn-success">Export Excel</a>
@@ -97,7 +114,7 @@
             <tr>
                 <td>
                     @if($book->photo)
-                        <img src="{{ asset('storage/' . $book->photo) }}" alt="Cover" class="img-thumbnail" style="width: 60px; height: 80px;">
+                        <img src="{{ asset('assets/Buku/' . $book->photo) }}" alt="Cover" class="img-thumbnail" style="width: 60px; height: 80px;">
                     @else
                         <span class="text-muted">-</span>
                     @endif

@@ -118,7 +118,8 @@
                             icon: 'success',
                             title: 'Berhasil Login!',
                             text: '{{ session("login_success") }}',
-                            confirmButtonColor: '#3085d6'
+                            showConfirmButton: false,
+                            timer: 3000
                         });
                     </script>
                 @endif

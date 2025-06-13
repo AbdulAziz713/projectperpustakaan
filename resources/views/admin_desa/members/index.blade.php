@@ -10,13 +10,6 @@
         </a>
     </div>
 
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-        </div>
-    @endif
-
     <div class="card shadow-sm border-0">
         <div class="card-header bg-primary text-white">
             <h6 class="m-0 fw-semibold">Daftar Anggota Terdaftar</h6>

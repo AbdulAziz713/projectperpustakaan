@@ -7,10 +7,6 @@
         <a href="{{ route('admin_desa.books.create') }}" class="btn btn-primary">+ Tambah Buku</a>
     </div>
 
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     <div class="card shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -31,7 +27,7 @@
                         <tr>
                             <td>
                                 @if($book->photo)
-                                    <img src="{{ asset('storage/' . $book->photo) }}" alt="Cover" class="img-thumbnail" style="width: 60px; height: 80px;">
+                                    <img src="{{ asset('assets/Buku/' . $book->photo) }}" alt="Cover" class="img-thumbnail" style="width: 60px; height: 80px;">
                                 @else
                                     <span class="text-muted">-</span>
                                 @endif
@@ -43,7 +39,10 @@
                             <td>{{ $book->stock }}</td>
                             <td>
                                 <a href="{{ route('admin_desa.books.edit', $book) }}" class="btn btn-sm btn-info text-white">Edit</a>
-                                <button class="btn btn-sm btn-danger delete-btn" data-id="{{ $book->id }}">Hapus</button>
+                                <form action="{{ route('admin_desa.books.destroy', $book) }}" method="POST" class="d-inline delete-form">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger delete-btn">Hapus</button>
+                                </form>
                             </td>
                         </tr>
                         @empty
@@ -59,30 +58,30 @@
 
     {{ $books->links() }}
 </div>
-
+@endsection
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const bookId = this.dataset.id;
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const form = this.closest('form'); // ambil form terdekat
+
                 Swal.fire({
-                    title: 'Yakin ingin menghapus?',
-                    text: 'Tindakan ini tidak bisa dibatalkan!',
+                    title: 'Apakah Anda yakin?',
+                    text: "Data buku yang dihapus tidak dapat dikembalikan!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, hapus!'
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
                 }).then((result) => {
-                    if (result.isConfirmed) {
-                        fetch(`/admin_desa/books/${bookId}`, {
-                            method: 'DELETE',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            }
-                        }).then(() => location.reload());
+                    if (result.isConfirmed && form) {
+                        form.submit(); // hanya submit jika form ditemukan
                     }
                 });
             });
@@ -90,4 +89,3 @@
     });
 </script>
 @endpush
-@endsection

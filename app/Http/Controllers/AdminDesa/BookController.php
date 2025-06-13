@@ -5,7 +5,6 @@ namespace App\Http\Controllers\AdminDesa;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Book;
-use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -35,13 +34,25 @@ class BookController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'photo' => 'nullable|image|max:2048',
+        ], [
+            'title.required' => 'Judul wajib diisi.',
+            'photo.image' => 'File harus berupa gambar.',
+            'photo.max' => 'Ukuran file foto maksimal 2MB.',
         ]);
 
         if ($request->hasFile('photo')) {
-            $validated['photo'] = $request->file('photo')->store('book_photos', 'public');
+            $photo = $request->file('photo');
+            $filename = uniqid() . '.' . $photo->getClientOriginalExtension();
+            $destination = public_path('assets/Buku');
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0755, true);
+            }
+
+            $photo->move($destination, $filename);
+            $validated['photo'] = $filename;
         }
 
-        // Tambahkan lokasi dari user login
         $validated['location'] = auth()->user()->location;
 
         Book::create($validated);
@@ -68,14 +79,28 @@ class BookController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'photo' => 'nullable|image|max:2048',
+        ], [
+            'title.required' => 'Judul wajib diisi.',
+            'photo.image' => 'File harus berupa gambar.',
+            'photo.max' => 'Ukuran file foto maksimal 2MB.',
         ]);
 
         if ($request->hasFile('photo')) {
-            if ($book->photo) {
-                Storage::disk('public')->delete($book->photo);
+            $oldPhotoPath = public_path('assets/Buku/' . $book->photo);
+            if ($book->photo && file_exists($oldPhotoPath)) {
+                unlink($oldPhotoPath);
             }
 
-            $validated['photo'] = $request->file('photo')->store('book_photos', 'public');
+            $photo = $request->file('photo');
+            $filename = uniqid() . '.' . $photo->getClientOriginalExtension();
+            $destination = public_path('assets/Buku');
+
+            if (!file_exists($destination)) {
+                mkdir($destination, 0755, true);
+            }
+
+            $photo->move($destination, $filename);
+            $validated['photo'] = $filename;
         }
 
         $book->update($validated);
@@ -87,8 +112,19 @@ class BookController extends Controller
     {
         $this->authorizeLocation($book);
 
-        if ($book->photo) {
-            Storage::disk('public')->delete($book->photo);
+        $photoPath = public_path('assets/Buku/' . $book->photo);
+        if ($book->photo && file_exists($photoPath)) {
+            unlink($photoPath);
+        }
+
+        if ($book->stock > 0) {
+            return redirect()->route('admin_daerah.books.index')
+                             ->with('error', 'Buku tidak bisa dihapus karena masih memiliki stok.');
+        }
+        
+        // Hapus file cover jika ada
+        if ($book->photo && file_exists(public_path('assets/Buku/' . $book->photo))) {
+            unlink(public_path('assets/Buku/' . $book->photo));
         }
 
         $book->delete();
@@ -96,9 +132,6 @@ class BookController extends Controller
         return redirect()->route('admin_desa.books.index')->with('success', 'Buku berhasil dihapus.');
     }
 
-    /**
-     * Mengecek apakah buku sesuai dengan lokasi user login.
-     */
     protected function authorizeLocation(Book $book)
     {
         if ($book->location !== auth()->user()->location) {

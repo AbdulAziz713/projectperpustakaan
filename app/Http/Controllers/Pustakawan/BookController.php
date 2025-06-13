@@ -30,10 +30,24 @@ class BookController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'photo' => 'nullable|image|max:2048',
+        ], [
+            'title.required' => 'Judul wajib diisi.',
+            'photo.image' => 'File harus berupa gambar.',
+            'photo.max' => 'Ukuran file foto maksimal 2MB.',
         ]);
 
         if ($request->hasFile('photo')) {
-            $validated['photo'] = $request->file('photo')->store('book_photos', 'public');
+            $photo = $request->file('photo');
+            $filename = uniqid() . '.' . $photo->getClientOriginalExtension();
+            $destinationPath = public_path('assets/Buku');
+        
+            // Pastikan direktori tujuan ada
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+        
+            $photo->move($destinationPath, $filename);
+            $validated['photo'] = $filename; // Simpan hanya nama file, tanpa path
         }
 
         Book::create($validated);
@@ -56,14 +70,28 @@ class BookController extends Controller
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
             'photo' => 'nullable|image|max:2048',
+        ], [
+            'title.required' => 'Judul wajib diisi.',
+            'photo.image' => 'File harus berupa gambar.',
+            'photo.max' => 'Ukuran file foto maksimal 2MB.',
         ]);
 
         if ($request->hasFile('photo')) {
-            // Hapus foto lama jika ada
-            if ($book->photo) {
-                Storage::disk('public')->delete($book->photo);
+            // Hapus file lama jika ada
+            if ($book->photo && file_exists(public_path('assets/Buku/' . $book->photo))) {
+                unlink(public_path('assets/Buku/' . $book->photo));
             }
-            $validated['photo'] = $request->file('photo')->store('book_photos', 'public');
+        
+            $photo = $request->file('photo');
+            $filename = uniqid() . '.' . $photo->getClientOriginalExtension();
+            $destinationPath = public_path('assets/Buku');
+        
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+        
+            $photo->move($destinationPath, $filename);
+            $validated['photo'] = $filename;
         }
         
         $book->update($validated);
@@ -73,6 +101,16 @@ class BookController extends Controller
 
     public function destroy(Book $book)
     {
+        if ($book->stock > 0) {
+            return redirect()->route('admin_daerah.books.index')
+                             ->with('error', 'Buku tidak bisa dihapus karena masih memiliki stok.');
+        }
+        
+        // Hapus file cover jika ada
+        if ($book->photo && file_exists(public_path('assets/Buku/' . $book->photo))) {
+            unlink(public_path('assets/Buku/' . $book->photo));
+        }
+        
         $book->delete();
 
         return redirect()->route('pustakawan.books.index')->with('success', 'Buku berhasil dihapus.');

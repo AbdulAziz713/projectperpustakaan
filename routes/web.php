@@ -24,7 +24,6 @@ Route::middleware(['auth'])->prefix('admin-desa')->name('admin_desa.')->group(fu
 
 Route::middleware(['auth'])->prefix('pustakawan')->name('pustakawan.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Pustakawan\DashboardController::class, 'index'])->name('dashboard');
-
     Route::resource('borrowings', BorrowingController::class)->only(['index', 'create', 'store']);
     Route::put('borrowings/{borrowing}/return', [BorrowingController::class, 'returnBook'])->name('borrowings.return');
     Route::get('returns', [BorrowingController::class, 'returnIndex'])->name('returns.index');

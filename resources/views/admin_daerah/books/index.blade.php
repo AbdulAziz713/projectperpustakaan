@@ -7,10 +7,6 @@
         <a href="{{ route('admin_daerah.books.create') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Tambah Buku</a>
     </div>
 
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     <div class="card shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -31,7 +27,7 @@
                         <tr>
                             <td>
                                 @if($book->photo)
-                                    <img src="{{ asset('storage/' . $book->photo) }}" alt="Cover" class="img-thumbnail" style="width: 60px; height: 80px;">
+                                    <img src="{{ asset('assets/Buku/' . $book->photo) }}" alt="Cover" class="img-thumbnail" style="width: 60px; height: 80px;">
                                 @else
                                     <span class="text-muted">-</span>
                                 @endif
@@ -62,26 +58,30 @@
 
     {{ $books->links() }}
 </div>
-
+@endsection
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const deleteForms = document.querySelectorAll('.delete-form');
-        deleteForms.forEach(function(form) {
-            form.addEventListener('submit', function(e) {
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
                 e.preventDefault();
+
+                const form = this.closest('form'); // ambil form terdekat
+
                 Swal.fire({
-                    title: 'Yakin?',
-                    text: 'Tindakan ini tidak bisa dibatalkan!',
+                    title: 'Apakah Anda yakin?',
+                    text: "Data buku yang dihapus tidak dapat dikembalikan!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, lanjut!'
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
                 }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit();
+                    if (result.isConfirmed && form) {
+                        form.submit(); // hanya submit jika form ditemukan
                     }
                 });
             });
@@ -89,4 +89,3 @@
     });
 </script>
 @endpush
-@endsection

@@ -34,7 +34,7 @@
                 <!-- End Carousel Item -->
 
                 <div class="carousel-item">
-                    <img src="{{ asset('MediCio-1.0.0/assets/img/hero-carousel/hero-carousel-3.jpg') }}" alt="">
+                    <img src="{{ asset('assets/slide3.jpg') }}" alt="">
                     <div class="container">
                         <h2>Temporibus autem quibusdam</h2>
                         <p>Beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt omnis iste natus error sit voluptatem
@@ -68,9 +68,9 @@
 
                     <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
                         <div class="service-item position-relative">
-                            <div class="icon"><i class="fas fa-heartbeat icon"></i></div>
-                            <h4><a href="" class="stretched-link">Lorem Ipsum</a></h4>
-                            <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                            <div class="icon"><i class="fas fa-file icon"></i></div>
+                            <h4><a href="" class="stretched-link">Data Lenkap</a></h4>
+                            <p>Kami memberikan data perpustakaan yang ada di Kabupaten Subang secara lengkap dan real time.</p>
                         </div>
                     </div>
                     <!-- End Service Item -->
@@ -109,31 +109,13 @@
         </section>
         <!-- /Featured Services Section -->
 
-        <!-- Call To Action Section -->
-        <section id="call-to-action" class="call-to-action section accent-background">
-
-            <div class="container">
-                <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="col-xl-10">
-                        <div class="text-center">
-                            <h3>In an emergency? Need help now?</h3>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            <a class="cta-btn" href="#appointment">Make an Appointment</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-        <!-- /Call To Action Section -->
-
         <!-- About Section -->
         <section id="about" class="about section">
 
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
-                <h2>About Us<br></h2>
-                <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+                <h2>Tentang Kami<br></h2>
+                <p>Dinas Kearsipan dan Perpustakaan Kabupaten Subang</p>
             </div>
             <!-- End Section Title -->
 
@@ -141,21 +123,16 @@
 
                 <div class="row gy-4">
                     <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
-                        <img src="{{ asset('MediCio-1.0.0/assets/img/about.jpg') }}" class="img-fluid" alt="">
-                        <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
+                        <img src="{{ asset('assets/perpustakaan.webp') }}" class="img-fluid" alt="">
+                        <!-- <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a> -->
                     </div>
                     <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
-                        <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assumenda.</h3>
+                        <h3>Perpustakaan Daerah Kabupaten Subang</h3>
                         <p class="fst-italic">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Perpustakaan Daerah Kabupaten Subang adalah pusat literasi dan pembelajaran bagi seluruh masyarakat. Kami berdedikasi untuk menyediakan akses mudah terhadap informasi dan pengetahuan melalui koleksi buku yang beragam, layanan digital modern, serta berbagai program literasi yang inovatif. Mari bersama wujudkan masyarakat Subang yang cerdas dan berwawasan luas.
                         </p>
-                        <ul>
-                            <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                            <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                            <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
-                        </ul>
-                        <p>
-                            Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
+                        <p>Di bawah kepemimpinan Ibu Yeni Nuraeni S.Sos., M.AP., kami terus bertransformasi menjadi perpustakaan modern yang nyaman dan inklusif. Dengan diresmikannya gedung layanan baru kami, kami menghadirkan fasilitas yang lebih lengkap untuk menunjang kebutuhan belajar dan rekreasi Anda.
+                          Kami tidak hanya menyediakan koleksi buku fisik, tetapi juga layanan digital melalui aplikasi <a href="https://play.google.com/store/apps/details?id=com.appsfoundry.eperpuswl.id.simadumaca&hl=id&pli=1" target="_blank">Simadu Maca </a>(Sistem Membaca Digital Menuju Masyarakat Cerdas) yang memungkinkan Anda membaca di mana saja dan kapan saja. Selain itu, Perpustakaan Keliling kami secara aktif menjangkau masyarakat hingga ke pelosok desa, memastikan akses literasi yang merata.
                         </p>
                     </div>
                 </div>
@@ -176,8 +153,8 @@
                         <div class="stats-item d-flex align-items-center w-100 h-100">
                             <i class="fas fa-user-md flex-shrink-0"></i>
                             <div>
-                                <span data-purecounter-start="0" data-purecounter-end="25" data-purecounter-duration="1" class="purecounter"></span>
-                                <p>Doctors</p>
+                                <span data-purecounter-start="0" data-purecounter-end="33" data-purecounter-duration="1" class="purecounter"></span>
+                                <p>PNS</p>
                             </div>
                         </div>
                     </div>
@@ -753,153 +730,6 @@
       </div>
 
     </section><!-- /Doctors Section -->
-
-    <!-- Gallery Section -->
-    <section id="gallery " class="gallery section ">
-
-      <!-- Section Title -->
-      <div class="container section-title " data-aos="fade-up ">
-        <h2>Gallery</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container " data-aos="fade-up " data-aos-delay="100 ">
-
-        <div class="swiper init-swiper ">
-          <script type="application/json " class="swiper-config ">
-            {
-              "loop ": true,
-              "speed ": 600,
-              "autoplay ": {
-                "delay ": 5000
-              },
-              "slidesPerView ": "auto ",
-              "centeredSlides ": true,
-              "pagination ": {
-                "el ": ".swiper-pagination ",
-                "type ": "bullets ",
-                "clickable ": true
-              },
-              "breakpoints ": {
-                "320 ": {
-                  "slidesPerView ": 1,
-                  "spaceBetween ": 0
-                },
-                "768 ": {
-                  "slidesPerView ": 3,
-                  "spaceBetween ": 20
-                },
-                "1200 ": {
-                  "slidesPerView ": 5,
-                  "spaceBetween ": 20
-                }
-              }
-            }
-          </script>
-          <div class="swiper-wrapper align-items-center ">
-            <div class="swiper-slide "><a class="glightbox " data-gallery="images-gallery " href="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-1.jpg') }}"><img src="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-1.jpg') }}" class="img-fluid " alt=" "></a></div>
-            <div class="swiper-slide "><a class="glightbox " data-gallery="images-gallery " href="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-2.jpg') }}"><img src="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-2.jpg') }}" class="img-fluid " alt=" "></a></div>
-            <div class="swiper-slide "><a class="glightbox " data-gallery="images-gallery " href="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-3.jpg') }}"><img src="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-3.jpg') }}" class="img-fluid " alt=" "></a></div>
-            <div class="swiper-slide "><a class="glightbox " data-gallery="images-gallery " href="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-4.jpg') }}"><img src="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-4.jpg') }}" class="img-fluid " alt=" "></a></div>
-            <div class="swiper-slide "><a class="glightbox " data-gallery="images-gallery " href="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-5.jpg') }}"><img src="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-5.jpg') }}" class="img-fluid " alt=" "></a></div>
-            <div class="swiper-slide "><a class="glightbox " data-gallery="images-gallery " href="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-6.jpg') }}"><img src="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-6.jpg') }}" class="img-fluid " alt=" "></a></div>
-            <div class="swiper-slide "><a class="glightbox " data-gallery="images-gallery " href="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-7.jpg') }}"><img src="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-7.jpg') }}" class="img-fluid " alt=" "></a></div>
-            <div class="swiper-slide "><a class="glightbox " data-gallery="images-gallery " href="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-8.jpg') }}"><img src="{{ asset('MediCio-1.0.0/assets/img/gallery/gallery-8.jpg') }}" class="img-fluid " alt=" "></a></div>
-          </div>
-          <div class="swiper-pagination "></div>
-        </div>
-
-      </div>
-
-    </section><!-- /Gallery Section -->
-
-    <!-- Pricing Section -->
-    <section id="pricing " class="pricing section ">
-
-      <!-- Section Title -->
-      <div class="container section-title " data-aos="fade-up ">
-        <h2>Pricing</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container ">
-
-        <div class="row gy-3 ">
-
-          <div class="col-xl-3 col-lg-6 " data-aos="fade-up " data-aos-delay="100 ">
-            <div class="pricing-item ">
-              <h3>Free</h3>
-              <h4><sup>$</sup>0<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li class="na ">Pharetra massa</li>
-                <li class="na ">Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap ">
-                <a href="# " class="btn-buy ">Buy Now</a>
-              </div>
-            </div>
-          </div><!-- End Pricing Item -->
-
-          <div class="col-xl-3 col-lg-6 " data-aos="fade-up " data-aos-delay="200 ">
-            <div class="pricing-item featured ">
-              <h3>Business</h3>
-              <h4><sup>$</sup>19<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li class="na ">Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap ">
-                <a href="# " class="btn-buy ">Buy Now</a>
-              </div>
-            </div>
-          </div><!-- End Pricing Item -->
-
-          <div class="col-xl-3 col-lg-6 " data-aos="fade-up " data-aos-delay="400 ">
-            <div class="pricing-item ">
-              <h3>Developer</h3>
-              <h4><sup>$</sup>29<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li>Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap ">
-                <a href="# " class="btn-buy ">Buy Now</a>
-              </div>
-            </div>
-          </div><!-- End Pricing Item -->
-
-          <div class="col-xl-3 col-lg-6 " data-aos="fade-up " data-aos-delay="400 ">
-            <div class="pricing-item ">
-              <span class="advanced ">Advanced</span>
-              <h3>Ultimate</h3>
-              <h4><sup>$</sup>49<span> / month</span></h4>
-              <ul>
-                <li>Aida dere</li>
-                <li>Nec feugiat nisl</li>
-                <li>Nulla at volutpat dola</li>
-                <li>Pharetra massa</li>
-                <li>Massa ultricies mi</li>
-              </ul>
-              <div class="btn-wrap ">
-                <a href="# " class="btn-buy ">Buy Now</a>
-              </div>
-            </div>
-          </div><!-- End Pricing Item -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Pricing Section -->
 
     <!-- Faq Section -->
     <section id="faq " class="faq section light-background ">

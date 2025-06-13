@@ -40,33 +40,7 @@
     <input type="file" name="photo" class="form-control">
     @if(isset($book) && $book->photo)
         <div class="mt-2">
-            <img src="{{ asset('storage/' . $book->photo) }}" class="cover-preview" alt="Cover">
+            <img src="{{ asset('assets/Buku/' . $book->photo) }}" class="cover-preview" style="width: 80px; height: 100px;" alt="Cover">
         </div>
     @endif
 </div>
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const deleteForms = document.querySelectorAll('.delete-form');
-    deleteForms.forEach(function(form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Yakin?',
-                text: "Tindakan ini tidak bisa dibatalkan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, lanjut!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            });
-        });
-    });
-});
-</script>
-@endpush
